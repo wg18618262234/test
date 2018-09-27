@@ -28,7 +28,7 @@ def on_open(ws):
         global guanqia
         ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
         # ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
-        for i in range(1000):
+        while True:
             time.sleep(0.5)
             ws.send('{"pktId":2}')
             time.sleep(0.5)
