@@ -1,4 +1,4 @@
-# coding=gbk
+# coding=utf-8
 import websocket
 try:
     import thread
@@ -13,8 +13,8 @@ def on_message(ws, message):
     print(message)
     if (json.loads(message).get('k') and json.loads(message).get('k')!=int(guanqia)):
         guanqia = int(guanqia) + 1
-    print('µ±Ç°ÌôÕ½¹Ø¿¨ÊÇ£º%s'%guanqia)
-    print('·şÎñÆ÷·µ»Ø¹Ø¿¨ÊÇ£º%s'%json.loads(message).get('k'))
+    print('å½“å‰æŒ‘æˆ˜å…³å¡æ˜¯ï¼š%s'%guanqia)
+    print('æœåŠ¡å™¨è¿”å›å…³å¡æ˜¯ï¼š%s'%json.loads(message).get('k'))
     print('__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________')
 
 def on_error(ws, error):
@@ -26,12 +26,12 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         global guanqia
-        ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
-        # ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
+        # ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
+        ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
         while True:
-            time.sleep(0.5)
+            time.sleep(0.3)
             ws.send('{"pktId":2}')
-            time.sleep(0.5)
+            time.sleep(0.3)
             ws.send('{"levelId":%d,"operate":2,"danci":4,"pktId":5}'%(int(guanqia)))
         time.sleep(1)
         ws.close()
@@ -40,8 +40,8 @@ def on_open(ws):
 
 
 while True:
-    # guanqia = input('ÊäÈë¹Ø¿¨Êı£º')
-    guanqia = 892
+    guanqia = input('è¾“å…¥å…³å¡æ•°ï¼š')
+    # guanqia = 892
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp("ws://47.99.84.144:35001/",
                               on_message = on_message,
