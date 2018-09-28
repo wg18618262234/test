@@ -26,8 +26,8 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         global guanqia
-        # ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
-        ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
+        ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
+        # ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
         while True:
             time.sleep(0.3)
             ws.send('{"pktId":2}')
@@ -40,8 +40,8 @@ def on_open(ws):
 
 
 while True:
-    guanqia = input('输入关卡数：')
-    # guanqia = 892
+    # guanqia = input('输入关卡数：')
+    guanqia = 895
     websocket.enableTrace(True)
     ws = websocket.WebSocketApp("ws://47.99.84.144:35001/",
                               on_message = on_message,
