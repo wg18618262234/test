@@ -48,9 +48,9 @@ def on_open(ws):
             time.sleep(0.3)
             # 挑战boss
             ws.send('{"levelId":%d,"operate":2,"danci":4,"pktId":5}' % (int(guanqia)))
-            print('                                     ************')
+            print('                                     **********')
             print('                                     第%d次挑战' % num)
-            print('                                     ************')
+            print('                                     **********')
             num = num + 1
             time.sleep(0.3)
             # 无尽炼狱挑战
