@@ -72,7 +72,7 @@ def on_open(ws):
 while True:
     # guanqia = input('输入关卡数：')
     # guanqia = 950
-    websocket.enableTrace(True)
+    # websocket.enableTrace(True)
     ws = websocket.WebSocketApp("ws://47.99.84.144:35001/",
                                 on_message=on_message,
                                 on_error=on_error,
