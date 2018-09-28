@@ -7,6 +7,7 @@ except ImportError:
 import time
 import json
 
+# 服务器返回信息打印
 def on_message(ws, message):
     global guanqia
     print('__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________')
@@ -29,6 +30,7 @@ def on_close(ws):
 def on_open(ws):
     def run(*args):
         global guanqia
+        # 登陆
         ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
         # ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
         while True:
