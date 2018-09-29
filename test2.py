@@ -79,3 +79,4 @@ while True:
                                 on_close=on_close)
     ws.on_open = on_open
     ws.run_forever()
+    time.sleep(180)
