@@ -1,6 +1,6 @@
 # coding=utf-8
 import websocket
-import time,json
+import datetime, time, json
 
 try:
     import thread
@@ -14,7 +14,7 @@ lasttime = 0
 
 # 服务器返回信息打印
 def on_message(ws, message):
-    global guanqia,lasttime
+    global guanqia, lasttime
     # print(message)
     # if (json.loads(message).get('k') and json.loads(message).get('k') != int(guanqia)):
     #     guanqia = int(guanqia) + 1
@@ -28,58 +28,78 @@ def on_message(ws, message):
     if json.loads(message).get('pd') == 1080:
         print('服务器返回无尽炼狱已通关层数：%s' % json.loads(message).get('level'))
 
+
 # 服务器异常信息打印
 def on_error(ws, error):
     print(error)
+
 
 # 服务器关闭信息打印
 def on_close(ws):
     print("### closed ###")
 
-#向服务器发送参数
+
+# 向服务器发送参数
 def on_open(ws):
     def run(*args):
         global guanqia
         global num
+
         # 登陆
         ws.send('{"userName":"18618262234","passWord":"wanggang00","plat":0,"key":"","pktId":0}')
         # ws.send('{"userName":"mao8020586bu","passWord":"luozhenkun","plat":0,"key":"","pktId":0}')
+
+        # 获取并更新最后挂机时间
+        ws.send('{"levelId":0,"operate":5,"danci":0,"pktId":5}')
         while True:
             time.sleep(0.3)
             # 获取关卡信息
             ws.send('{"pktId":2}')
+
             time.sleep(0.3)
             # 挑战boss
             ws.send('{"levelId":%d,"operate":2,"danci":4,"pktId":5}' % (int(guanqia)))
             print('******************************************************************************************')
-            print('                                     第%d次挑战' % num)
+            nowtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            print('                  第%d次挑战                   当前时间：%s' % (num, nowtime))
             print('******************************************************************************************')
             num = num + 1
+
             time.sleep(0.3)
             # 无尽炼狱挑战
             ws.send('{"operate":2,"pktId":244}')
+
             time.sleep(0.3)
-            # 金币副本挑战
-            ws.send('{"operate":2,"fbType":1,"pktId":243}')
-            time.sleep(0.3)
-            # 经验副本挑战
-            ws.send('{"operate":2,"fbType":2,"pktId":243}')
-            time.sleep(0.3)
-            # 羁绊副本挑战
-            ws.send('{"operate":2,"fbType":3,"pktId":243}')
-            time.sleep(0.3)
-            # 熔炼副本挑战
-            ws.send('{"operate":2,"fbType":4,"pktId":243}')
-            time.sleep(0.3)
-            # 草药副本挑战
-            ws.send('{"operate":2,"fbType":5,"pktId":243}')
-            time.sleep(0.3)
-            # 血精副本挑战
-            ws.send('{"operate":2,"fbType":6,"pktId":243}')
+            # 发送时间戳
+            nowtimes = str(time.time()).replace('.', '')[:13]
+            print('发送时间戳：%s' % nowtimes)
+            ws.send('{"nowTime":%s,"pktId":249}' % nowtimes)
+
+            # 战斗三回合
+            for i in range(3):
+                time.sleep(0.3)
+                ws.send('{"levelId":%d,"operate":1,"danci":1,"pktId":5}' % guanqia)
+                time.sleep(0.3)
+                ws.send('{"pktId":-1}')
+
             # time.sleep(0.3)
-            # # 自动挑战下一回合
-            # ws.send('{"pktId":-1}')
-            # ws.send('{"levelId":890,"operate":1,"danci":1,"pktId":5}')
+            # # 金币副本挑战
+            # ws.send('{"operate":2,"fbType":1,"pktId":243}')
+            # time.sleep(0.3)
+            # # 经验副本挑战
+            # ws.send('{"operate":2,"fbType":2,"pktId":243}')
+            # time.sleep(0.3)
+            # # 羁绊副本挑战
+            # ws.send('{"operate":2,"fbType":3,"pktId":243}')
+            # time.sleep(0.3)
+            # # 熔炼副本挑战
+            # ws.send('{"operate":2,"fbType":4,"pktId":243}')
+            # time.sleep(0.3)
+            # # 草药副本挑战
+            # ws.send('{"operate":2,"fbType":5,"pktId":243}')
+            # time.sleep(0.3)
+            # # 血精副本挑战
+            # ws.send('{"operate":2,"fbType":6,"pktId":243}')
         time.sleep(1)
         ws.close()
         print("thread terminating...")
