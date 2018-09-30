@@ -52,11 +52,11 @@ def on_open(ws):
         # 获取并更新最后挂机时间
         ws.send('{"levelId":0,"operate":5,"danci":0,"pktId":5}')
         while True:
-            time.sleep(0.3)
+            time.sleep(0.05)
             # 获取关卡信息
             ws.send('{"pktId":2}')
 
-            time.sleep(0.3)
+            time.sleep(0.05)
             # 挑战boss
             ws.send('{"levelId":%d,"operate":2,"danci":4,"pktId":5}' % (int(guanqia)))
             print('******************************************************************************************')
@@ -65,11 +65,11 @@ def on_open(ws):
             print('******************************************************************************************')
             num = num + 1
 
-            time.sleep(0.3)
+            time.sleep(0.05)
             # 无尽炼狱挑战
             ws.send('{"operate":2,"pktId":244}')
 
-            time.sleep(0.3)
+            time.sleep(0.05)
             # 发送时间戳
             nowtimes = str(time.time()).replace('.', '')[:13]
             print('发送时间戳：%s' % nowtimes)
@@ -77,27 +77,27 @@ def on_open(ws):
 
             # 战斗三回合
             for i in range(3):
-                time.sleep(0.3)
+                time.sleep(0.05)
                 ws.send('{"levelId":%d,"operate":1,"danci":1,"pktId":5}' % guanqia)
-                time.sleep(0.3)
+                time.sleep(0.05)
                 ws.send('{"pktId":-1}')
 
-            # time.sleep(0.3)
+            # time.sleep(0.05)
             # # 金币副本挑战
             # ws.send('{"operate":2,"fbType":1,"pktId":243}')
-            # time.sleep(0.3)
+            # time.sleep(0.05)
             # # 经验副本挑战
             # ws.send('{"operate":2,"fbType":2,"pktId":243}')
-            # time.sleep(0.3)
+            # time.sleep(0.05)
             # # 羁绊副本挑战
             # ws.send('{"operate":2,"fbType":3,"pktId":243}')
-            # time.sleep(0.3)
+            # time.sleep(0.05)
             # # 熔炼副本挑战
             # ws.send('{"operate":2,"fbType":4,"pktId":243}')
-            # time.sleep(0.3)
+            # time.sleep(0.05)
             # # 草药副本挑战
             # ws.send('{"operate":2,"fbType":5,"pktId":243}')
-            # time.sleep(0.3)
+            # time.sleep(0.05)
             # # 血精副本挑战
             # ws.send('{"operate":2,"fbType":6,"pktId":243}')
         time.sleep(1)
