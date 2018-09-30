@@ -1,23 +1,26 @@
 # coding=utf-8
 import websocket
+import time,json
 
 try:
     import thread
 except ImportError:
     import _thread as thread
-import time
-import json
 
 guanqia = 0
 num = 0
+lasttime = 0
 
 
 # 服务器返回信息打印
 def on_message(ws, message):
-    global guanqia
+    global guanqia,lasttime
     # print(message)
     # if (json.loads(message).get('k') and json.loads(message).get('k') != int(guanqia)):
     #     guanqia = int(guanqia) + 1
+    if json.loads(message).get('lastGuaJiTime'):
+        lasttime = json.loads(message).get('lastGuaJiTime')
+        print('最后挂机时间：%s' % json.loads(message).get('lastGuaJiTime'))
     if json.loads(message).get('k'):
         guanqia = json.loads(message).get('k')
         print('当前挑战BOSS关卡是：%s' % guanqia)
@@ -25,11 +28,11 @@ def on_message(ws, message):
     if json.loads(message).get('pd') == 1080:
         print('服务器返回无尽炼狱已通关层数：%s' % json.loads(message).get('level'))
 
-
+# 服务器异常信息打印
 def on_error(ws, error):
     print(error)
 
-
+# 服务器关闭信息打印
 def on_close(ws):
     print("### closed ###")
 
@@ -55,9 +58,24 @@ def on_open(ws):
             time.sleep(0.3)
             # 无尽炼狱挑战
             ws.send('{"operate":2,"pktId":244}')
-            # time.sleep(0.3)
-            # # 草药副本挑战
-            # ws.send('{"operate":2,"fbType":5,"pktId":243}')
+            time.sleep(0.3)
+            # 金币副本挑战
+            ws.send('{"operate":2,"fbType":1,"pktId":243}')
+            time.sleep(0.3)
+            # 经验副本挑战
+            ws.send('{"operate":2,"fbType":2,"pktId":243}')
+            time.sleep(0.3)
+            # 羁绊副本挑战
+            ws.send('{"operate":2,"fbType":3,"pktId":243}')
+            time.sleep(0.3)
+            # 熔炼副本挑战
+            ws.send('{"operate":2,"fbType":4,"pktId":243}')
+            time.sleep(0.3)
+            # 草药副本挑战
+            ws.send('{"operate":2,"fbType":5,"pktId":243}')
+            time.sleep(0.3)
+            # 血精副本挑战
+            ws.send('{"operate":2,"fbType":6,"pktId":243}')
             # time.sleep(0.3)
             # # 自动挑战下一回合
             # ws.send('{"pktId":-1}')
