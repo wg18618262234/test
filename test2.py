@@ -1,6 +1,6 @@
 # coding=utf-8
 import websocket
-import datetime, time, json
+import datetime, time, json,os
 
 try:
     import thread
@@ -114,6 +114,7 @@ def on_open(ws):
                 time.sleep(0.05)
                 ws.send('{"pktId":-1}')
 
+            os.system('cls')
         time.sleep(1)
         ws.close()
         print("thread terminating...")
