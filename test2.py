@@ -182,12 +182,11 @@ def on_open(ws):
 
     thread.start_new_thread(run, ())
 
-
+zhanli = input('请输入当前总战斗力：')
 while True:
     # guanqia = input('输入关卡数：')
     # guanqia = 950
     # websocket.enableTrace(True)
-    zhanli = input('请输入当前总战斗力：')
     # zhanli = 380269
     ws = websocket.WebSocketApp("ws://47.99.84.144:35001/",
                                 on_message=on_message,
