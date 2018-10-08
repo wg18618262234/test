@@ -71,6 +71,7 @@ def on_close(ws):
     print("### closed ###")
 
 
+# 24点休息两分钟
 def except12():
     if int(time.strftime('%H')) == 23 and int(time.strftime('%M')) == 59 and int(time.strftime('%S')) > 0:
         os.system('cls')
