@@ -1,6 +1,6 @@
 # coding=utf-8
 import websocket
-import datetime, time, json, os
+import time, json, os
 
 try:
     import thread
@@ -71,6 +71,15 @@ def on_close(ws):
     print("### closed ###")
 
 
+def except12():
+    if int(time.strftime('%H')) == 23 and int(time.strftime('%M')) == 59 and int(time.strftime('%S')) > 0:
+        os.system('cls')
+        print('##################################12点啦，休息两分钟##################################')
+        time.sleep(120)
+        os.system('cls')
+    return True
+
+
 # 向服务器发送参数
 def on_open(ws):
     def run(*args):
@@ -83,7 +92,7 @@ def on_open(ws):
         # 获取并更新最后挂机时间
         ws.send('{"levelId":0,"operate":5,"danci":0,"pktId":5}')
 
-        while True:
+        while except12():
             print('最后挂机时间：%s' % lasttime)
 
             # 获取关卡信息
@@ -98,7 +107,7 @@ def on_open(ws):
             time.sleep(0.05)
             ws.send('{"operate":0,"id":0,"num":0,"pktId":32}')
 
-            nowtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            nowtime = time.strftime('%Y-%m-%d %H:%M:%S')
             print('******************************************************************************************')
             print('                  第%d次挑战                   当前时间：%s' % (num, nowtime))
             print('******************************************************************************************')
@@ -181,6 +190,7 @@ def on_open(ws):
         print("thread terminating...")
 
     thread.start_new_thread(run, ())
+
 
 zhanli = input('请输入当前总战斗力：')
 while True:
